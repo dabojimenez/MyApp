@@ -61,7 +61,26 @@ namespace Data.Persistence
         // se traigan registros eliminados logicos
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            // Extras
+            UpdateTimestamps();
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void UpdateTimestamps()
+        {
+            // Obtenemos todas las entidades, que se van a modificar, pero los que se han modificado uno o varios cambios
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified);
+
+            // Recorremos el listado de las netidades que se van a modificar
+            foreach (var entry in entries)
+            {
+                // Verificamos si la entidad tiene la propiedad UpdatedAt, para poder actualizarla con la fecha y hora actual
+                if (entry.Metadata.FindProperty("UpdatedAt") != null)
+                {
+                    entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+                }
+            }
         }
     }
 }
