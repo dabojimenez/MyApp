@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public class PersonRepository : IRepository<PersonEntity, Guid>, ICodeRepository<PersonEntity>
+    public class PersonRepository : IRepository<PersonEntity, Guid>
+        , ICodeRepository<PersonEntity>
     {
         private readonly ApplicationDbContext _context;
 
@@ -76,6 +77,15 @@ namespace Data.Repositories
 
             return await _context.Persons
                 .FirstOrDefaultAsync(p => p.Code == normalizedCode);
+        }
+
+        public async Task<bool> ExistsWithCodeAsync(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                throw new ArgumentNullException("El código no puede estar vacío", nameof(code));
+            string normalizedCode = code.Trim().ToUpperInvariant();
+            return await _context.Persons
+                .AnyAsync(p => p.Code == normalizedCode);
         }
     }
 }
