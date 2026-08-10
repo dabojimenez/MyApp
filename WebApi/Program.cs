@@ -1,4 +1,5 @@
 using Application.UseCases.Persons;
+using Data;
 using Data.Repositories;
 using Domain;
 using Domain.Abstractions;
@@ -9,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
-builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
+//builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
+//builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
+builder.Services.AddData();
 
 builder.Services.AddScoped<CreatePersonUseCase>();
 builder.Services.AddScoped<GetPersonByIdUseCase>();
