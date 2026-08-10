@@ -55,8 +55,7 @@ namespace Data.Repositories
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            _context.Persons
-                .Remove(entity);
+            _context.Persons.Remove(entity);
             return Task.CompletedTask;
         }
 
