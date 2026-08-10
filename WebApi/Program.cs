@@ -15,6 +15,27 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 //builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
 //builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
 builder.Services.AddData(connectionString);
+// Ejecutar este comando, para poder usar las migraciones, junto al paquete nuget, de Design
+// dotnet tool install --global dotnet-ef
+
+// Para crear una migraciona
+// dotnet ef migrations add InitialCreate --project Data --startup-project WebApi
+// InitialCreate: nombre de la migracion
+// --project: flag, que nos permite indentificar el proyecto donde esta EFCore, en este caso es el proyecto Data
+// --startup-project: flag, que nos pemrite identificar el proyecto que tiene la cadena de conexion, en este caso es WebApi
+
+// Para usar o aplicar las migraciones en la base de datos
+// dotnet ef database update --project Data --startup-project WebApi
+
+//Comandos utilizados:
+
+//Instalación de dotnet - ef de manrea global, necesario para ejecutar comandos de Entity Framework:
+//dotnet tool install--global dotnet-ef
+//Creación de migración inicial:
+//dotnet ef migrations add InitialCreate --project Data --startup-project WebApi
+
+//Aplicar migraciones pendientes a la base de datos:
+//dotnet ef database update --project Data --startup-project WebApi
 
 builder.Services.AddScoped<CreatePersonUseCase>();
 builder.Services.AddScoped<GetPersonByIdUseCase>();
