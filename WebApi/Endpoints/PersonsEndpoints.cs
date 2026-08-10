@@ -101,6 +101,33 @@ namespace WebApi.Endpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             ;
+
+            group.MapDelete("/{id:guid}", async (Guid id, DeletePersonUseCase useCase) =>
+            {
+                try
+                {
+                    await useCase.ExecuteAsync(id);
+                    return Results.NoContent();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("DeletePersonById")
+            .WithSummary("Eliminar una persona existente")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }

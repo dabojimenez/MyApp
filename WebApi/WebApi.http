@@ -30,4 +30,7 @@ Content-Type: application/json
     "email": "correo_update@correo.com",
     "phoneNumber": "0964152367",
     "fullName": "Stalyn Jimenez"
-  }
+}
+
+###
+DELETE {{WebApi_HostAddress}}/api/persons/abda402e-ac71-47ba-b755-c3ae3faecd1a
