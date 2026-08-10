@@ -32,3 +32,14 @@ app.UseHttpsRedirection();
 
 
 app.Run();
+
+//string name = "Juan";
+//Console.WriteLine(name.Hi());
+
+//static class StringExtensions
+//{
+//    public static string Hi(this string str)
+//    {
+//        return "Hola " + str;
+//    }
+//}
