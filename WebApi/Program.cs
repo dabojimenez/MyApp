@@ -1,10 +1,16 @@
 using Application.UseCases.Persons;
+using Data.Repositories;
+using Domain;
+using Domain.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
+builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
 
 builder.Services.AddScoped<CreatePersonUseCase>();
 builder.Services.AddScoped<GetPersonByIdUseCase>();
