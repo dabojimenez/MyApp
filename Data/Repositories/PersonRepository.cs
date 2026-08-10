@@ -30,5 +30,29 @@ namespace Data.Repositories
                 .ThenBy(p => p.LastName)
                 .ToListAsync();
         }
+
+        public async Task AddAsync(PersonEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            await _context.Persons
+                .AddAsync(entity);
+        }
+
+        public Task UpdateAsync(PersonEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(PersonEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
