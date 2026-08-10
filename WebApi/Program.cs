@@ -14,7 +14,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 //builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
 //builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
-builder.Services.AddData();
+builder.Services.AddData(connectionString);
 
 builder.Services.AddScoped<CreatePersonUseCase>();
 builder.Services.AddScoped<GetPersonByIdUseCase>();
