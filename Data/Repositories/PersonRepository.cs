@@ -22,5 +22,13 @@ namespace Data.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<IEnumerable<PersonEntity>> GetAllAsync()
+        {
+            return await _context.Persons
+                .AsNoTracking() // No tendra un rastreo de cambios, lo que mejora el rendimiento para consultas de SOLO lectura
+                .OrderBy(p => p.FirstName)
+                .ThenBy(p => p.LastName)
+                .ToListAsync();
+        }
     }
 }
