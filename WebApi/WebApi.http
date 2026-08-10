@@ -34,3 +34,7 @@ Content-Type: application/json
 
 ###
 DELETE {{WebApi_HostAddress}}/api/persons/abda402e-ac71-47ba-b755-c3ae3faecd1a
+
+###
+GET {{WebApi_HostAddress}}/api/persons/code/MRC9852
+Accept: application/json

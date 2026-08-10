@@ -128,6 +128,28 @@ namespace WebApi.Endpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             ;
+
+            group.MapGet("/code/{code}", async (string code, GetPersonByCodeUseCase useCase) =>
+            {
+                try
+                {
+                    PersonEntity person = await useCase.ExecuteAsync(code);
+                    return Results.Ok(person);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("GetPersonByCode")
+            .WithSummary("Obtener una persona por su Código")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }
