@@ -42,12 +42,22 @@ namespace Data.Repositories
 
         public Task UpdateAsync(PersonEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            _context.Persons
+                .Update(entity);
+            return Task.CompletedTask;
         }
 
         public Task DeleteAsync(PersonEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            _context.Persons
+                .Remove(entity);
+            return Task.CompletedTask;
         }
 
         public Task<int> SaveChangesAsync()
