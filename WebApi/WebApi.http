@@ -14,3 +14,7 @@ Content-Type: application/json
   "email": "marela@correo.com",
   "phoneNumber": "0984152334"
 }
+
+###
+GET {{WebApi_HostAddress}}/api/persons
+Accept: application/json

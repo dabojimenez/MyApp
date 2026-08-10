@@ -52,6 +52,23 @@ namespace WebApi.Endpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             ;
+
+            group.MapGet("/", async (GetAllPersonsUseCase useCase) =>
+            {
+                try
+                {
+                    var persons = await useCase.ExecuteAsync();
+                    return Results.Ok(persons);
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("GetAllPersons")
+            .WithSummary("Obtener todas las personas")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }
