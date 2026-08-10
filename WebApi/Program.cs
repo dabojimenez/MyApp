@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Te hace falta la conexión a la base de datos");
+
 //builder.Services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
 //builder.Services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
 builder.Services.AddData();
