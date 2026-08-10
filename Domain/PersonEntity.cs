@@ -12,6 +12,8 @@ namespace Domain
         public string LastName { get; private set; } = string.Empty;
         public string Email { get; private set; } = string.Empty;
         public string PhoneNumber { get; private set; } = string.Empty;
+        public string FullName => $"{FirstName} {LastName}";
+
 
         public PersonEntity(
             string code
@@ -29,6 +31,24 @@ namespace Domain
 
             Id = Guid.NewGuid();
             Code = code.Trim().ToUpper();
+            FirstName = firstName.Trim();
+            LastName = lastName.Trim();
+            Email = email.Trim();
+            PhoneNumber = phoneNumber.Trim();
+        }
+
+        public void UpdatePersonalInfo(
+            string firstName
+            , string lastName
+            , string email
+            , string phoneNumber
+            )
+        {
+            ValidateFirstName(firstName);
+            ValidateLastName(lastName);
+            ValidateEmail(email);
+            ValidatePhoneNumber(phoneNumber);
+
             FirstName = firstName.Trim();
             LastName = lastName.Trim();
             Email = email.Trim();
