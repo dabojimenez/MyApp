@@ -69,6 +69,38 @@ namespace WebApi.Endpoints
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status500InternalServerError)
             ;
+
+            group.MapPut("/{id:guid}", async (Guid id, UpdatePersonDto dto, UpdatePersonUseCase useCase) =>
+            {
+                if (id != dto.Id)
+                {
+                    return Results.BadRequest("Los ids no corresponden");
+                }
+
+                try
+                {
+                    PersonEntity person = await useCase.ExecuteAsync(dto);
+                    return Results.Ok(person);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("UpdatePersonById")
+            .WithSummary("Actualizar una persona existente")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }
