@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public class PersonRepository : IRepository<PersonEntity, Guid>
+    public class PersonRepository : IRepository<PersonEntity, Guid>, ICodeRepository<PersonEntity>
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,6 +16,7 @@ namespace Data.Repositories
             _context = context;
         }
 
+        // Implementacion de la interfaz IRepository
         public async Task<PersonEntity?> GetByIdAsync(Guid id)
         {
             return await _context.Persons
@@ -62,6 +63,19 @@ namespace Data.Repositories
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+
+        // Implementacion de la interfaz ICodeRepository
+        public async Task<PersonEntity?> GetByCodeAsync(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                throw new ArgumentNullException("El código no puede estar vacío", nameof(code));
+
+            string normalizedCode = code.Trim().ToUpperInvariant();
+
+            return await _context.Persons
+                .FirstOrDefaultAsync(p => p.Code == normalizedCode);
         }
     }
 }
