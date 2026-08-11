@@ -32,9 +32,12 @@ namespace Data.Repositories
                 .ToListAsync();
         }
 
-        public Task AddAsync(VisitEntity entity)
+        public async Task AddAsync(VisitEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
+            await _context.Visits.AddAsync(entity);
         }
 
         public Task UpdateAsync(VisitEntity entity)
@@ -47,9 +50,9 @@ namespace Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync();
         }
     }
 }
