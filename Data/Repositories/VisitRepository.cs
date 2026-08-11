@@ -71,9 +71,14 @@ namespace Data.Repositories
                 .AnyAsync(v => v.PersonId == personid && v.ExitTime == null);
         }
 
-        public Task<VisitEntity> GetActiveVisitByPersonCodeAsync(string personCode)
+        public async Task<VisitEntity?> GetActiveVisitByPersonCodeAsync(string personCode)
         {
-            throw new NotImplementedException();
+            return await _context.Visits
+                .Include(v => v.Person)
+                .FirstOrDefaultAsync(v => v.Person != null
+                && v.Person.Code.ToUpper() == personCode.ToUpper()
+                && v.ExitTime == null
+                );
         }
 
         public Task<IEnumerable<VisitEntity>> GetActiveVisitAsync()
