@@ -13,6 +13,7 @@ namespace Data.Persistence
         }
 
         public DbSet<PersonEntity> Persons { get; set; }
+        public DbSet<VisitEntity> Visits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +52,53 @@ namespace Data.Persistence
                 .HasDefaultValueSql("GETUTCDATE()");
 
                 entity.Property<DateTime?>("UpdatedAt")
+                .HasDefaultValueSql("GETUTCDATE()");
+            });
+
+            // Tabla visitas
+            modelBuilder.Entity<VisitEntity>(entity =>
+            {
+                entity.ToTable("Visits");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.PersonId)
+                .IsRequired();
+
+                entity.Property(e => e.EntryTime)
+                .IsRequired();
+
+                entity.Property(e => e.ExitTime)
+                .IsRequired();
+
+                entity.Ignore(e => e.isActive);
+                entity.Ignore(e => e.Duration);
+
+                entity.HasOne(e => e.Person)
+                .WithMany()
+                .HasForeignKey(e => e.PersonId)
+                .OnDelete(DeleteBehavior.Restrict) // Si se elimina, la visita, la persona no se elimina (y no se podra borrar la persona si tiene visitas)
+                ;
+
+                // Definición de los indices, necesarios para la busqueda
+                entity.HasIndex(e => e.PersonId);
+                entity.HasIndex(e => e.EntryTime);
+                // Creaci´n de un indice compuesto
+                entity.HasIndex(e => new
+                {
+                    e.PersonId,
+                    e.ExitTime,
+                });
+
+                entity.Property<DateTime>("CreatedAt")
+                .IsRequired()
+                .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property<DateTime>("UpdatedAt")
+                .IsRequired()
                 .HasDefaultValueSql("GETUTCDATE()");
             });
         }
