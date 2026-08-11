@@ -22,5 +22,34 @@ namespace Data.Repositories
                 .Include(v => v.Person)
                 .FirstOrDefaultAsync(v => v.Id == id);
         }
+
+        public async Task<IEnumerable<VisitEntity>> GetAllAsync()
+        {
+            return await _context.Visits
+                .Include(v => v.Person)
+                .AsNoTracking()
+                .OrderByDescending(v => v.EntryTime)
+                .ToListAsync();
+        }
+
+        public Task AddAsync(VisitEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(VisitEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(VisitEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
