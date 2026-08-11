@@ -90,9 +90,13 @@ namespace Data.Repositories
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<VisitEntity>> GetVisitsByPersonIdAsync(Guid personId)
+        public async Task<IEnumerable<VisitEntity>> GetVisitsByPersonIdAsync(Guid personId)
         {
-            throw new NotImplementedException();
+            return await _context.Visits
+                .Include(v => v.Person)
+                .Where(v => v.PersonId == personId)
+                .OrderByDescending(v => v.EntryTime)
+                .ToListAsync();
         }
     }
 }
