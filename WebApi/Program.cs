@@ -1,4 +1,5 @@
 using Application.UseCases.Persons;
+using Application.UseCases.Visits;
 using Data;
 using WebApi.Endpoints;
 
@@ -41,6 +42,12 @@ builder.Services.AddScoped<GetPersonByCodeUseCase>();
 builder.Services.AddScoped<GetAllPersonsUseCase>();
 builder.Services.AddScoped<UpdatePersonUseCase>();
 builder.Services.AddScoped<DeletePersonUseCase>();
+// Casos de uso visit
+builder.Services.AddScoped<GetActiveVisitsUseCase>();
+builder.Services.AddScoped<GetAllVisitsUseCase>();
+builder.Services.AddScoped<GetVisitsByPersonUseCase>();
+builder.Services.AddScoped<RegisterEntryUseCase>();
+builder.Services.AddScoped<RegisterExitUseCase>();
 
 var app = builder.Build();
 
@@ -53,6 +60,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapPersonsEndpoints();
+app.MapVisitsEndpoints();
 
 app.Run();
 
