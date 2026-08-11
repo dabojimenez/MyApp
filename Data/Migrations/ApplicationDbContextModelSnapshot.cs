@@ -68,6 +68,53 @@ namespace Data.Migrations
 
                     b.ToTable("Persons", (string)null);
                 });
+
+            modelBuilder.Entity("Domain.VisitEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<DateTime>("EntryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExitTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntryTime");
+
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("PersonId", "ExitTime");
+
+                    b.ToTable("Visits", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.VisitEntity", b =>
+                {
+                    b.HasOne("Domain.PersonEntity", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
 #pragma warning restore 612, 618
         }
     }
