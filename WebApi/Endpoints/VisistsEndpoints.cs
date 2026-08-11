@@ -86,7 +86,7 @@ namespace WebApi.Endpoints
                 }
             }).WithName("GetActivesVisits")
             .WithSummary("Obtener todas las visitas activas (personas dentro)")
-            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -113,12 +113,38 @@ namespace WebApi.Endpoints
                 }
             }).WithName("GetVisitsByPerson")
             .WithSummary("Obtener historial de visitas de una persona")
-            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             ;
 
+            group.MapPost("/exit", async (RegisterExitDto dto, RegisterExitUseCase useCase) =>
+            {
+                try
+                {
+                    VisitEntity visit = await useCase.ExecuteAsync(dto);
+                    return Results.Ok(visit);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("RegisterExit")
+            .WithSummary("Registrar una salida de una persona (por visitid o code)")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }

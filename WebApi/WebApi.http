@@ -68,3 +68,21 @@ Content-Type: application/json
 ###
 GET {{WebApi_HostAddress}}/api/visits/person/b98d5eaf-ee0f-4cd1-aa6b-3d4ff7333240
 Content-Type: application/json
+
+### Register exit vy visitid
+POST {{WebApi_HostAddress}}/api/visits/exit
+Content-Type: application/json
+
+{
+    "visitId": "2b4d40bf-0baa-49ae-b124-fa8d1d8c6723",
+    "exitTime": null
+}
+
+### Register exit POR Codigo
+POST {{WebApi_HostAddress}}/api/visits/exit
+Content-Type: application/json
+
+{
+    "code": "MRCL9852",
+    "exitTime": null
+}
