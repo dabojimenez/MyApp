@@ -92,6 +92,33 @@ namespace WebApi.Endpoints
             .Produces(StatusCodes.Status500InternalServerError)
             ;
 
+            group.MapGet("/person/{personid:guid}", async (Guid personId, GetVisitsByPersonUseCase useCase) =>
+            {
+                try
+                {
+                    var visits = await useCase.ExecuteAsync(personId);
+                    return Results.Ok(visits);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("GetVisitsByPerson")
+            .WithSummary("Obtener historial de visitas de una persona")
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
+
         }
     }
 }

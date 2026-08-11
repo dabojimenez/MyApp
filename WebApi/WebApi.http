@@ -61,6 +61,10 @@ Content-Type: application/json
     "entryTime": null
 }
 
-### Registar pro codigo
+### 
 GET {{WebApi_HostAddress}}/api/visits/active
+Content-Type: application/json
+
+###
+GET {{WebApi_HostAddress}}/api/visits/person/b98d5eaf-ee0f-4cd1-aa6b-3d4ff7333240
 Content-Type: application/json
