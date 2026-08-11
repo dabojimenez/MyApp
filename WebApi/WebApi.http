@@ -60,3 +60,7 @@ Content-Type: application/json
     "code": "SBrrTL9852",
     "entryTime": null
 }
+
+### Registar pro codigo
+GET {{WebApi_HostAddress}}/api/visits/active
+Content-Type: application/json
