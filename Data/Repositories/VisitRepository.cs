@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Data.Repositories
 {
     public class VisitRepository : IRepository<VisitEntity, Guid>
+        , IVisitRepository<VisitEntity>
     {
         private readonly ApplicationDbContext _context;
 
@@ -61,6 +62,28 @@ namespace Data.Repositories
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        // IVisitRepository
+        public async Task<bool> HasActiveVisitAsync(Guid personid)
+        {
+            return await _context.Visits
+                .AnyAsync(v => v.PersonId == personid && v.ExitTime == null);
+        }
+
+        public Task<VisitEntity> GetActiveVisitByPersonCodeAsync(string personCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<VisitEntity>> GetActiveVisitAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<VisitEntity>> GetVisitsByPersonIdAsync(Guid personId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
