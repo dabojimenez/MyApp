@@ -42,7 +42,11 @@ namespace Data.Repositories
 
         public Task UpdateAsync(VisitEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
+            _context.Visits.Update(entity);
+            return Task.CompletedTask;
         }
 
         public Task DeleteAsync(VisitEntity entity)
