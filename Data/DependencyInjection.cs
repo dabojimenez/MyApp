@@ -19,6 +19,8 @@ namespace Data
 
             services.AddScoped<IRepository<PersonEntity, Guid>, PersonRepository>();
             services.AddScoped<ICodeRepository<PersonEntity>, PersonRepository>();
+            services.AddScoped<IRepository<VisitEntity, Guid>, VisitRepository>();
+            services.AddScoped<IVisitRepository<VisitEntity>, VisitRepository>();
 
             return services;
         }
