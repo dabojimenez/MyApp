@@ -8,10 +8,10 @@ POST {{WebApi_HostAddress}}/api/persons
 Content-Type: application/json
 
 {
-  "code": "MRCL9852",
-  "firstName": "Marcela",
-  "lastName": "Casa",
-  "email": "marela@correo.com",
+  "code": "SBTL9852",
+  "firstName": "Sebastian",
+  "lastName": "Jimenez Casa",
+  "email": "sebitas@correo.com",
   "phoneNumber": "0984152334"
 }
 
@@ -42,3 +42,21 @@ Accept: application/json
 ### VISITAS ENNDPOINTS
 GET {{WebApi_HostAddress}}/api/visits
 Accept: application/json
+
+### Regitrar por id pesona
+POST {{WebApi_HostAddress}}/api/visits/entry
+Content-Type: application/json
+
+{
+    "personid": "f6007c9b-2193-442d-b615-79a5683e9f43",
+    "entryTime": null
+}
+
+### Registar pro codigo
+POST {{WebApi_HostAddress}}/api/visits/entry
+Content-Type: application/json
+
+{
+    "code": "SBrrTL9852",
+    "entryTime": null
+}
