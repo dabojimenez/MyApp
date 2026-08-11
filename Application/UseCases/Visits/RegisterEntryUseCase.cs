@@ -29,7 +29,7 @@ namespace Application.UseCases.Visits
             {
                 personId = dto.PersonId.Value;
             }
-            else if(!string.IsNullOrWhiteSpace(dto.Code))
+            else if (!string.IsNullOrWhiteSpace(dto.Code))
             {
                 var person = await _codeRepository.GetByCodeAsync(dto.Code);
                 if (person is null)
