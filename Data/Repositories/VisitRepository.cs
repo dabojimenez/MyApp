@@ -81,9 +81,13 @@ namespace Data.Repositories
                 );
         }
 
-        public Task<IEnumerable<VisitEntity>> GetActiveVisitAsync()
+        public async Task<IEnumerable<VisitEntity>> GetActiveVisitAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Visits
+                .Include(v => v.Person)
+                .Where(v => v.ExitTime == null)
+                .OrderBy(v => v.EntryTime)
+                .ToListAsync();
         }
 
         public Task<IEnumerable<VisitEntity>> GetVisitsByPersonIdAsync(Guid personId)

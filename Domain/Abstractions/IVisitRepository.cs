@@ -4,7 +4,7 @@
     {
         Task<bool> HasActiveVisitAsync(Guid personid);
 
-        Task<TEntiy> GetActiveVisitByPersonCodeAsync(string personCode);
+        Task<TEntiy?> GetActiveVisitByPersonCodeAsync(string personCode);
 
         Task<IEnumerable<TEntiy>> GetActiveVisitAsync();
 
