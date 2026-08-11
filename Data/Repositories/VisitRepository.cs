@@ -51,7 +51,11 @@ namespace Data.Repositories
 
         public Task DeleteAsync(VisitEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity is null)
+                throw new ArgumentNullException(nameof(entity));
+
+            _context.Visits.Remove(entity);
+            return Task.CompletedTask;
         }
 
         public async Task<int> SaveChangesAsync()
