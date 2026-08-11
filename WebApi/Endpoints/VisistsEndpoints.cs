@@ -1,4 +1,6 @@
-﻿namespace WebApi.Endpoints
+﻿using Application.UseCases.Visits;
+
+namespace WebApi.Endpoints
 {
     public static class VisistsEndpoints
     {
@@ -6,6 +8,33 @@
         {
             RouteGroupBuilder? group = app.MapGroup("/api/visits")
                 .WithTags("Visits");
+
+            group.MapGet("/", async (GetAllVisitsUseCase useCase) =>
+            {
+                try
+                {
+                    var visits = await useCase.ExecuteAsync();
+                    return Results.Ok(visits);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.InternalServerError(new { error = ex.Message });
+                }
+            }).WithName("GetAllVisits")
+            .WithSummary("Obtener todas las visitas")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            ;
         }
     }
 }

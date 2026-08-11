@@ -38,3 +38,7 @@ DELETE {{WebApi_HostAddress}}/api/persons/abda402e-ac71-47ba-b755-c3ae3faecd1a
 ###
 GET {{WebApi_HostAddress}}/api/persons/code/MRC9852
 Accept: application/json
+
+### VISITAS ENNDPOINTS
+GET {{WebApi_HostAddress}}/api/visits
+Accept: application/json
